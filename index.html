@@ -1,0 +1,438 @@
+<!doctype html>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>GUESS GAME</title>
+</head>
+
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	body{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+    	margin: 50px auto;
+		
+	}
+
+/*   Container- div*/
+	#wrapper_div{  
+      width: 285px;
+      padding: 10px;
+      margin: auto;
+	  background: green;
+	  border-radius: 5px;
+	}
+
+/*	Tittle of the Game*/
+	h3{
+		text-align: center;
+		font-size: 16px;
+
+	}
+
+	.win_losses{
+		display: flex;
+		flex-direction: row;	
+		margin: 10px auto;
+/*		background:green;*/
+
+	}
+
+	h6{
+		
+		margin: 4px auto;
+		font-size: 14px;
+		font-weight: bold;
+/*		text-align: center;*/
+	}
+
+	.count, .win,.losses{
+		color: white;
+		margin-left: 5px;
+		background: black;
+		padding: 3px;
+		border-radius: 5px;
+
+	}
+
+	#input-div{
+		width: 80%;
+		margin: 10px auto ;
+		display: flex;
+		justify-content: space-around;
+	}
+
+/*	Where to enter the numbber*/
+	input[type = "number"]{
+		width: 65%;
+		height: 33px;
+		background: white;
+		border-radius: 5px;
+		border: none;
+		padding-left: 5px;
+	}
+	
+/*	Play Button*/
+	input[type = "button"]{
+		width:30%;
+		background: blueviolet;
+		color: white;
+		font-size: 18px;
+		border-radius: 10px;
+		padding: 5px;
+		cursor: pointer;	
+	}
+
+
+/*	Results Update (win or loosses), The number of time(s) you have played the game and score update */
+
+	#results,#info,#description {
+		width: 90%;
+		margin: auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 18px;
+
+
+	}
+
+/*   Score Update*/
+	#description {
+		margin-bottom: 5px;	
+	}
+
+	.resetSaveBtn{
+		display: flex;
+		justify-content: center;
+		gap: 20px;
+	}
+
+	button#saveBtn{
+		color: white;
+		background: green;
+		padding: 5px;
+		font-size: 17px;
+		border-radius: 5px;
+		cursor: pointer;
+		
+	}
+
+
+	#saveBtn:hover{
+		background: cyan;
+		color: green;
+		transition: all 1s ease-in-out;
+	}
+
+
+	.resetBtn{
+		background: green;
+		padding: 5px;
+		justify-content: center;
+		text-align: center;
+		border-radius: 5px;
+		color: white;
+		cursor: pointer;
+		font-size: 17px;
+		background: black;
+		color: white;
+		
+	}
+
+	
+
+	
+</style>
+
+
+
+
+
+
+
+<body>
+
+	<div id="wrapper_div">
+		<h3> Guess a Number between 1 and 10</h3>
+
+		<div class="win_losses">
+			<h6>No of plays:<span class="count">20</span></h6>
+			<h6>Win:<span class="win">0</span></h6>
+			<h6>Losses:<span class="losses">0</span></h6>
+		</div>
+        
+        <div id="input-div">
+			<input type="number" id="text" placeholder="Enter your number">
+			<input type="button" id="button" value="Play">
+	    </div>
+
+	   
+	    <div class="all">
+	    	<span id="results"></span><br>
+		    <span id="info"></span><br>
+	   	</div>
+	   	
+	   
+	    
+	    	
+	    	
+	    
+	     <div class="resetSaveBtn">
+	     	<button class="resetBtn">Reset</button>
+		   <button id="saveBtn">Save</button>
+	     	
+	     </div>
+		 
+
+
+	</div>
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+		
+			let results = document.getElementById("results");
+			const saveResult = localStorage.getItem("saveresult")
+			let text = document.getElementById("text");
+			let win = document.querySelector(".win")
+			 const saveWins = localStorage.getItem("saveWin");
+			let losses = document.querySelector(".losses")
+			 const saveLosses = localStorage.getItem("saveLoss");
+			let count = document.querySelector(".count");
+			const saveCount = localStorage.getItem("savecounts");
+			let info = document.getElementById("info");
+			const saveInfo = localStorage.getItem("saveInfo")
+			let playBtn = document.getElementById("button");
+			let resetBtn = document.querySelector(".resetBtn");
+			const savebtn = document.querySelector(".saveBtn");
+			
+
+
+			//The code here save Count to localStorage;
+
+			if(saveCount){
+				count.innerHTML = saveCount;
+			}
+
+			const saveCountToLocalStorage = ()=>{
+				localStorage.setItem("savecounts", count.innerHTML)
+			}
+
+
+			//The code here save win to localStorage
+			if(saveWins){
+				win.innerHTML = saveWins;
+			}
+			const saveWinToLocalStorage = ()=>{
+				localStorage.setItem("saveWin", win.innerHTML)
+			}
+
+
+
+			//The code here save losses to localStorage;
+			if(saveLosses){
+				losses.innerHTML = saveLosses;
+			}
+			const saveLossToLocalStorage = ()=>{
+				localStorage.setItem("saveLoss", losses.innerHTML)
+
+			}
+
+
+			//The code here save info to localStorage;
+			if(saveInfo){
+				info.innerHTML = saveInfo;
+			}
+			const saveInfoToLocalStorage = ()=>{
+				localStorage.setItem("saveInfo", info.innerHTML)
+			}
+
+
+			//The code here save result to localStorage;
+			if(saveResult){
+				results.innerHTML = saveResult;
+
+			}
+			const saveResultToLocalStorage = ()=>{
+				localStorage.setItem("saveresult", results.innerHTML)
+			}
+
+
+			//When the page is loaded, TextColor and backgroundColor should maintain
+			function maintainColorAndBackground(){
+				losses.style.color = "red";
+				losses.style.backgroundColor = "white"
+				win.style.color = "green";
+				win.style.backgroundColor = "white";
+				if(count.innerHTML == 0){
+					playBtn.disabled = true;
+
+				}
+
+			}
+
+			window.onload = ()=>{
+				maintainColorAndBackground();
+			}
+
+			window.onbeforeunload = ()=>{
+				maintainColorAndBackground();
+			}
+
+
+			
+
+			//The codes here call each function on clicking the savebtn
+			 saveBtn.addEventListener("click", saveCountToLocalStorage);//This call the count function
+			 saveBtn.addEventListener("click", saveWinToLocalStorage);//This call the win function
+			 saveBtn.addEventListener("click", saveLossToLocalStorage); //This call the loss function
+			 saveBtn.addEventListener("click", saveInfoToLocalStorage); //This call the info function
+			 saveBtn.addEventListener("click", saveResultToLocalStorage); //This call the result function
+
+
+			function playTime(){
+				count.innerHTML--; //Count innerHTML should decrease by 1
+			}
+	
+
+			function redColor() {
+				if (count.innerHTML <= 5) {
+				//Count backgroundColor should display red when it is less than 5 
+				count.style.backgroundColor = "red";
+				}
+			}
+			
+
+			// PLAY BUTTON EVENTLISTENER
+		   playBtn.addEventListener("click", ()=> {
+
+			let random = Math.floor(Math.random() * 10 + 1);//Random Number generated by browser;
+
+			// CONDITIONAL STATEMENT STARTS HERE
+			if(text.value == "" || text.value.trim() == "" || text.value >10 || text.value < 1){
+				// When the text input is empty or has space or greater than 10 or less than 1
+				let x = alert("Please Enter Number between 1 and 10 !");
+
+					//IF RANDOM IS EQUAL TO TEXT VALUE;
+				}else if (random == text.value){
+					// When the random Number generated by browser is equal to the vlue enter
+						win.innerHTML++;
+						win.style.color = "green";
+						win.style.backgroundColor = "white";
+						results.innerHTML = " &#X2714; Wow! Congratulations!"
+						results.style.fontSize = 18 + "px";
+						results.style.color = "white";
+						playTime();//Count innerHTML should get decrease by 1
+						redColor(); 
+
+							   //IF RANDOM IS NOT EQUAL TO TEXT VALUE;
+						}else if (random !== text.value){
+				
+							// When the random Number generated by browser is NOT equal to the vlue enter
+							// description.innerHTML = `Your score: win=${win ?? win}; losses=${losses++}`;
+							losses.innerHTML++;
+							losses.style.color = "red";
+							losses.style.backgroundColor = "white";
+							results.style.fontSize = 18 + "px";
+							results.innerHTML = ` &#X2716; Try again. The number is ${random}`;
+							results.style.color = "purple";
+							playTime();
+							redColor();
+						}
+               
+					//IF THE NUMBER OF TIMES PLAYED IS 20;
+			if (parseInt((win.innerHTML/10)*10 + (losses.innerHTML/10)*10) == 20 && ((win.innerHTML/10)*10) > 
+				((losses.innerHTML/10)*10)){
+
+				playBtn.disabled = true;
+				text.value = "";
+				results.innerHTML = "Congratulations <br> You Won !!!!";
+				results.style.fontSize = 26 + "px";
+					
+
+				} else if (parseInt((win.innerHTML/10)*10 + (losses.innerHTML/10)*10) == 20 && ((win.innerHTML/10)*10) < ((losses.innerHTML/10)*10)){
+					
+					playBtn.disabled = true;
+					text.value = "";
+					results.innerHTML = "You lost the game!"
+					results.style.fontSize = 26 + "px";
+	
+					
+					} else if (parseInt((win.innerHTML/10)*10 + (losses.innerHTML/10)*10) == 20 && ((win.innerHTML/10)*10) == ((losses.innerHTML/10)*10)){
+						alert("Tie; Play again")
+							}
+
+						text.value = ""; //Set input text back to empty on clicking play
+
+						info.innerHTML = `You have played for ${(win.innerHTML/10)*10 + (losses.innerHTML/10)*10} time(s)`;//Info about result
+
+
+
+			if(parseInt((win.innerHTML/10)*10 + (losses.innerHTML/10)*10) == 15){
+									alert("Note: You have five more times to play!")
+								}
+
+          
+		});
+
+
+				// RESET BUTTON CODE                  
+				resetBtn.addEventListener("click", () =>{
+
+					if(confirm("Do you want to reset the game?")){
+						// When resetBtn is clicked, the following codes should triggered
+
+					count.innerHTML = 20;// initialize the count back to 3
+					count.style.backgroundColor = "black";// set the background color back to black
+
+						win.innerHTML = 0;//Initialize win back to 0;
+						win.style.backgroundColor = "black";
+		   				losses.innerHTML = 0;// Initialize losses back to 0;
+		   				losses.style.backgroundColor = "black";
+
+							results.innerHTML = ""; //Result innerHTML should display empty;
+							info.innerHTML = ""; //Info innerHTML should display empty;
+
+								playBtn.disabled = false; //disbled button should be abled;
+								
+								text.value = ""; //Input field should back to 0;
+
+
+
+					}
+					
+				})
+
+
+
+ 
+        
+       
+
+       
+
+
+
+
+
+
+	</script>
+   
+</body>
+</html>
